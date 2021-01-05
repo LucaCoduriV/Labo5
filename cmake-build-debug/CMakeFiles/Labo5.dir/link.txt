@@ -1,3 +1,0 @@
-"A:\Program Files\JetBrains\CLion 2020.2.3\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\Labo5.dir/objects.a
-"A:\Program Files\mingw-w64\x86_64-8.1.0-win32-seh-rt_v6-rev0\mingw64\bin\ar.exe" cr CMakeFiles\Labo5.dir/objects.a @CMakeFiles\Labo5.dir\objects1.rsp
-"A:\Program Files\mingw-w64\x86_64-8.1.0-win32-seh-rt_v6-rev0\mingw64\bin\g++.exe" -Wall -Wextra -Wconversion -Wsign-conversion -pedantic -g   -Wl,--whole-archive CMakeFiles\Labo5.dir/objects.a -Wl,--no-whole-archive  -o Labo5.exe -Wl,--out-implib,libLabo5.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Labo5.dir\linklibs.rsp
