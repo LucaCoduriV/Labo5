@@ -4,5 +4,6 @@
 CMakeFiles/Labo5.dir/date.cpp.obj: ../date.cpp
 CMakeFiles/Labo5.dir/date.cpp.obj: ../date.h
 
+CMakeFiles/Labo5.dir/main.cpp.obj: ../date.h
 CMakeFiles/Labo5.dir/main.cpp.obj: ../main.cpp
 
