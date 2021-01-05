@@ -34,8 +34,10 @@ unsigned short nbreJoursMois(unsigned mois, unsigned annee) {
    }
 }
 
-Date::Date(unsigned int jour, unsigned int mois, unsigned int annee):jour(jour),
-mois(mois),annee(annee) {}
+Date::Date(unsigned int jour, unsigned int mois, unsigned int annee) : jour(jour),
+                                                                       mois(mois),
+                                                                       annee(
+                                                                          annee) {}
 
 Date Date::operator+(unsigned jours) const {
    return incrementer(jours);
@@ -50,7 +52,7 @@ Date &Date::operator+=(unsigned int jours) {
 }
 
 Date Date::operator-(int jours) const {
-   return decrementer((unsigned)jours);
+   return decrementer((unsigned) jours);
 }
 
 Date &Date::operator-=(unsigned int jours) {
@@ -63,82 +65,81 @@ Date &Date::operator-=(unsigned int jours) {
 
 unsigned Date::operator-(const Date &dateInf) const {
    // TODO vérifier que la dateInf est plus petite avant;
-   if(dateInf.annee == annee && dateInf.mois == mois){
+   unsigned jours = 0;
+   if (dateInf.annee == annee && dateInf.mois == mois) {
       return jour - dateInf.jour;
-   }else{
-      unsigned jours = 0;
-      if(dateInf.annee == annee){
-         //compter le nombre de jours dans les mois
-         for(unsigned i = dateInf.mois + 1; i < mois; i++){
-            jours += nbreJoursMois(i, dateInf.annee);
-         }
-         //ajouter les jours qui restent
-         jours += jour;
-         jours += nbreJoursMois(dateInf.mois, dateInf.annee) - dateInf.jour;
-      }else{
-         //ajouter les jours des années
-         for(unsigned i = dateInf.annee + 1; i < annee; i++){
-            if(estBissextile(i)) jours += 366;
-            else jours += 365;
-         }
-         //ajouter les jours des mois
-         for(unsigned i = dateInf.mois + 1; i <= 12; i++){
-            jours += nbreJoursMois(i, dateInf.annee);
-         }
-         for(unsigned i = 1;i < mois;i++){
-            jours += nbreJoursMois(i, annee);
-         }
-         //ajouter les jours qui restent
-         jours += jour;
-         jours += nbreJoursMois(dateInf.mois, dateInf.annee) - dateInf.jour;
-
+   } else if (dateInf.annee == annee) {
+      //ajouter le nombre de jours dans les mois
+      for (unsigned i = dateInf.mois + 1; i < mois; i++) {
+         jours += nbreJoursMois(i, dateInf.annee);
       }
-      return jours;
+      //ajouter les jours qui restent
+      jours += jour;
+      jours += nbreJoursMois(dateInf.mois, dateInf.annee) - dateInf.jour;
+   } else {
+      //ajouter les jours des années
+      for (unsigned i = dateInf.annee + 1; i < annee; i++) {
+         if (estBissextile(i)) jours += 366;
+         else jours += 365;
+      }
+      //ajouter les jours des mois
+      for (unsigned i = dateInf.mois + 1; i <= 12; i++) {
+         jours += nbreJoursMois(i, dateInf.annee);
+      }
+      for (unsigned i = 1; i < mois; i++) {
+         jours += nbreJoursMois(i, annee);
+      }
+      //ajouter les jours qui restent
+      jours += jour;
+      jours += nbreJoursMois(dateInf.mois, dateInf.annee) - dateInf.jour;
+
    }
+   return jours;
+
 }
 
-Date Date::incrementer(unsigned jours) const{
+Date Date::incrementer(unsigned jours) const {
    cout << "jour: " << jour << " mois: " << mois << " annee: " << annee << endl;
    unsigned jourTemp = jour;
    unsigned moisTemp = mois;
    unsigned anneeTemp = annee;
 
    jourTemp += jours;
-   while(jourTemp > jourDansMois(moisTemp, anneeTemp)){
+   while (jourTemp > jourDansMois(moisTemp, anneeTemp)) {
       jourTemp -= jourDansMois(moisTemp, anneeTemp);
       moisTemp++;
-      if(moisTemp > 12){
+      if (moisTemp > 12) {
          moisTemp = 1;
          anneeTemp++;
       }
    }
 
    cout << "jour: " << jourTemp << " mois: " << moisTemp << " annee: " << anneeTemp
-   << endl;
+        << endl;
 
    return Date(jourTemp, moisTemp, anneeTemp);
 }
 
-Date Date::decrementer(unsigned jours) const{
+Date Date::decrementer(unsigned jours) const {
    cout << "jour: " << jour << " mois: " << mois << " annee: " << annee << endl;
-   int jourTemp = (int)jour;
-   int moisTemp = (int)mois;
-   int anneeTemp = (int)annee;
+   int jourTemp = (int) jour;
+   int moisTemp = (int) mois;
+   int anneeTemp = (int) annee;
 
-   jourTemp -= (int)jours;
-   while(jourTemp < 1){
+   jourTemp -= (int) jours;
+   while (jourTemp < 1) {
       moisTemp--;
-      if(moisTemp < 1){
+      if (moisTemp < 1) {
          moisTemp = 12;
          anneeTemp--;
       }
-      jourTemp += (int)jourDansMois((unsigned)moisTemp, (unsigned)anneeTemp);
+      jourTemp += (int) jourDansMois((unsigned) moisTemp, (unsigned) anneeTemp);
    }
 
    cout << "jour: " << jourTemp << " mois: " << moisTemp << " annee: " << anneeTemp
         << endl;
 
-   return Date((unsigned)jourTemp, (unsigned)moisTemp, (unsigned)anneeTemp);
+   return Date((unsigned) jourTemp, (unsigned) moisTemp, (unsigned) anneeTemp);
 }
 
 unsigned Date::jourDansMois(unsigned int mois, unsigned int annee) {

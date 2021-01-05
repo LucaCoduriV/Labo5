@@ -16,7 +16,7 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 using namespace std;
 
 int main() {
-   Date *date = new Date(10,9,2032);
+   Date *date = new Date(1,1,2021);
    Date *date2 = new Date(1,1,2021);
 
    cout << *date - *date2;
