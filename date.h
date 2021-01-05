@@ -15,7 +15,7 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 
 class Date {
 public:
-   Date(unsigned jour = 0, unsigned mois = 0, unsigned annee = 0);
+   explicit Date(unsigned jour = 0, unsigned mois = 0, unsigned annee = 0);
 
    //<
    //>
@@ -31,13 +31,13 @@ public:
    Date& operator+=(unsigned jours);
    Date operator-(int jours) const;
    Date& operator-=(unsigned jours);
-//   unsigned operator-(const Date& date);
+   unsigned operator-(const Date& date) const;
 
    //<<
    //<<()
-   bool estBissextile() const;
+   //bool estBissextile() const;
    //static estBissextile(unsigned int annee)
-   unsigned jourDansMois() const;
+   //unsigned jourDansMois() const;
    static unsigned jourDansMois(unsigned int mois, unsigned int annee);
 public:
    unsigned jour;
