@@ -15,11 +15,33 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 
 class Date {
 public:
-   Date(unsigned int jour, unsigned int mois, unsigned int annee);
+   Date(unsigned jour, unsigned mois, unsigned annee);
+
+   //<
+   //>
+   //==
+   //<=
+   //>=
+   //!=
+   //++ gauche et droite
+   //-- gauche et droite
+
+   //+
+   //+=
+   //-
+   //-=
+   //– (différence)
+
+   //<<
+   //<<()
+   bool estBissextile() const;
+   //static estBissextile(unsigned int annee)
+   unsigned jourDansMois() const;
+   //static jourDansMois(unsigned int mois, unsigned int annee)
 private:
-   unsigned int jour;
-   unsigned int mois;
-   unsigned int annee;
+   unsigned jour;
+   unsigned mois;
+   unsigned annee;
 };
 
 
