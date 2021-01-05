@@ -11,16 +11,17 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 
 #include <cstdlib>
 #include <iostream>
+#include <cmath>
 #include "date.h"
 
 using namespace std;
 
 int main() {
-   Date *date = new Date(05,01,2021);
+   Date date(05,01,2021);
 
-   Date test = *date - 5;
+   Date test = date - 5;
 
-   cout << test.jour << " " << test.mois << " " << test.annee;
+   cout << date;
 
    return EXIT_SUCCESS;
 }

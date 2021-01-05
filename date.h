@@ -12,6 +12,8 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 #ifndef LABO5_DATE_H
 #define LABO5_DATE_H
 
+#include <iostream>
+#include <string>
 
 class Date {
 public:
@@ -33,16 +35,20 @@ public:
    Date& operator-=(unsigned jours);
 //   unsigned operator-(const Date& date);
 
-   //<<
-   //<<()
+   friend std::ostream& operator<<(std::ostream& lhs, Date date);
+   std::string operator()(const std::string& format) const;
    bool estBissextile() const;
    //static estBissextile(unsigned int annee)
    unsigned jourDansMois() const;
-   static unsigned jourDansMois(unsigned int mois, unsigned int annee);
-public:
+   //static unsigned jourDansMois(unsigned int mois, unsigned int annee);
+   std::string jourLitteral() const;
+   std::string moisLitteral() const;
+   std::string anneeLitteral() const;
+private:
    unsigned jour;
    unsigned mois;
    unsigned annee;
+
    Date incrementer(unsigned jours) const;
    Date decrementer(unsigned jours) const;
 };
