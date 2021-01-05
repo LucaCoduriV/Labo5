@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/Labo5.dir/date.cpp.obj"
   "CMakeFiles/Labo5.dir/main.cpp.obj"
   "Labo5.exe"
   "Labo5.exe.manifest"

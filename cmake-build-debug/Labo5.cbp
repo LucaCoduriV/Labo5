@@ -80,6 +80,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="B:/Documents/Google Drive/HEIG/PROG1/Labo5/date.cpp">
+			<Option target="Labo5"/>
+		</Unit>
+		<Unit filename="B:/Documents/Google Drive/HEIG/PROG1/Labo5/date.h">
+			<Option target="Labo5"/>
+		</Unit>
 		<Unit filename="B:/Documents/Google Drive/HEIG/PROG1/Labo5/main.cpp">
 			<Option target="Labo5"/>
 		</Unit>

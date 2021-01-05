@@ -142,6 +142,33 @@ Labo5/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Labo5.dir\build.make CMakeFiles/Labo5.dir/build
 .PHONY : Labo5/fast
 
+date.obj: date.cpp.obj
+
+.PHONY : date.obj
+
+# target to build an object file
+date.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Labo5.dir\build.make CMakeFiles/Labo5.dir/date.cpp.obj
+.PHONY : date.cpp.obj
+
+date.i: date.cpp.i
+
+.PHONY : date.i
+
+# target to preprocess a source file
+date.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Labo5.dir\build.make CMakeFiles/Labo5.dir/date.cpp.i
+.PHONY : date.cpp.i
+
+date.s: date.cpp.s
+
+.PHONY : date.s
+
+# target to generate assembly for a file
+date.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Labo5.dir\build.make CMakeFiles/Labo5.dir/date.cpp.s
+.PHONY : date.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -178,6 +205,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... Labo5
+	@echo ... date.obj
+	@echo ... date.i
+	@echo ... date.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

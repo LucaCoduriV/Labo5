@@ -50,7 +50,7 @@ CMAKE_CXX_COMPILER_AR:FILEPATH=A:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh
 CMAKE_CXX_COMPILER_RANLIB:FILEPATH=A:/Program Files/mingw-w64/x86_64-8.1.0-win32-seh-rt_v6-rev0/mingw64/bin/gcc-ranlib.exe
 
 //Flags used by the CXX compiler during all build types.
-CMAKE_CXX_FLAGS:STRING=
+CMAKE_CXX_FLAGS:STRING=-Wall -Wextra -Wconversion -Wsign-conversion -pedantic
 
 //Flags used by the CXX compiler during DEBUG builds.
 CMAKE_CXX_FLAGS_DEBUG:STRING=-g
