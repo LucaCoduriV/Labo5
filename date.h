@@ -27,10 +27,15 @@ public:
    //-- gauche et droite
 
    //+
+   Date operator+(unsigned jours);
    //+=
+   Date& operator+=(unsigned jours);
    //-
+   Date operator-(unsigned jours);
    //-=
+   Date& operator-=(unsigned jours);
    //– (différence)
+   unsigned operator-(const Date& date);
 
    //<<
    //<<()
