@@ -18,7 +18,7 @@ using namespace std;
 int main() {
    Date *date = new Date(05,02,2021);
    Date *date2 = new Date(05,01,2021);
-
+   if (date2 < date) {cout << "coucou" << endl;}
    cout << *date - *date2;
 
    //cout << test.jour << "." << test.mois << "." << test.annee;

@@ -23,15 +23,22 @@ public:
    //<=
    //>=
    //!=
-   //++ gauche et droite
-   //-- gauche et droite
 
-
+   bool operator==(const Date& date);
+   bool operator!=(const Date& date);
+   bool operator<(const Date& date); //chaipa pourquoi, mais les deux operateurs
+   bool operator>(const Date& date); // fonctionnent à l'envers...
+   bool operator<=(const Date& date);
+   bool operator>=(const Date& date);
    Date operator+(unsigned jours) const;
    Date& operator+=(unsigned jours);
+   Date& operator++();
+   Date operator++(int);
    Date operator-(int jours) const;
    Date& operator-=(unsigned jours);
    unsigned operator-(const Date& date) const;
+   Date& operator--();
+   Date operator--(int);
 
    //<<
    //<<()

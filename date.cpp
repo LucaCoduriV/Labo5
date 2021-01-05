@@ -10,6 +10,10 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 */
 
 #include "date.h"
+bool operator==(const Date& date1, const Date& date2) {
+   return date1.annee == date2.annee && date1.mois == date2.mois && date1.jour ==
+   date2.jour;
+}
 #include <iostream>
 #include <cstdlib>
 
@@ -34,6 +38,33 @@ unsigned short nbreJoursMois(unsigned mois, unsigned annee) {
    }
 }
 
+bool Date::operator==(const Date& date) {
+   return this->annee == date.annee && this->mois == date.mois && this->jour ==
+   date.jour;
+}
+
+bool Date::operator!=(const Date& date) {
+  return !(*this == date);
+}
+
+bool Date::operator<(const Date& date) {
+  return this->annee < date.annee || (this->annee == date.annee &&
+  (this->mois < date.mois || (this->mois == date.mois && this->jour < date.jour)));
+}
+
+bool Date::operator>(const Date& date) {
+   return this->annee > date.annee || (this->annee == date.annee &&
+   (this->mois > date.mois || (this->mois == date.mois && this->jour > date.jour)));
+}
+
+bool Date::operator<=(const Date& date) {
+  return *this == date || *this < date;
+}
+
+bool Date::operator>=(const Date& date) {
+   return *this == date || *this > date;
+}
+
 Date::Date(unsigned int jour, unsigned int mois, unsigned int annee):jour(jour),
 mois(mois),annee(annee) {}
 
@@ -47,6 +78,17 @@ Date &Date::operator+=(unsigned int jours) {
    mois = date.mois;
    annee = date.annee;
    return *this;
+}
+
+Date& Date::operator++() {
+   this->incrementer(1);
+   return *this;
+}
+
+Date Date::operator++(int) {
+   Date temp = *this;
+   this->incrementer(1);
+   return temp;
 }
 
 Date Date::operator-(int jours) const {
@@ -84,6 +126,17 @@ unsigned Date::operator-(const Date &date) const {
 
       return jours;
    }
+}
+
+Date& Date::operator--() {
+   this->decrementer(1);
+   return *this;
+}
+
+Date Date::operator--(int) {
+   Date temp = *this;
+   this->decrementer(1);
+   return temp;
 }
 
 Date Date::incrementer(unsigned jours) const{
