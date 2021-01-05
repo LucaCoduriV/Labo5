@@ -53,10 +53,10 @@ Date &Date::operator-=(unsigned int jours) {
    return *this;
 }
 
-unsigned Date::operator-(const Date &date) {
-   cout << "DIFFERENCE" << endl;
-   return 0;
-}
+//unsigned Date::operator-(const Date &date) {
+//   cout << "DIFFERENCE" << endl;
+//   return 0;
+//}
 
 Date Date::incrementer(unsigned jours) const{
    cout << "jour: " << jour << " mois: " << mois << " annee: " << annee << endl;
