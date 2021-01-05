@@ -14,7 +14,12 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 
 
 class Date {
-
+public:
+   Date(unsigned int jour, unsigned int mois, unsigned int annee);
+private:
+   unsigned int jour;
+   unsigned int mois;
+   unsigned int annee;
 };
 
 
