@@ -61,27 +61,38 @@ Date &Date::operator-=(unsigned int jours) {
    return *this;
 }
 
-unsigned Date::operator-(const Date &date) const {
-   cout << "DIFFERENCE" << endl;
-   // ATTENTION vérifier que la date est plus grande avant;
-   if(date.annee == annee && date.mois == mois){
-      return jour - date.jour;
+unsigned Date::operator-(const Date &dateInf) const {
+   // TODO vérifier que la dateInf est plus petite avant;
+   if(dateInf.annee == annee && dateInf.mois == mois){
+      return jour - dateInf.jour;
    }else{
       unsigned jours = 0;
+      if(dateInf.annee == annee){
+         //compter le nombre de jours dans les mois
+         for(unsigned i = dateInf.mois + 1; i < mois; i++){
+            jours += nbreJoursMois(i, dateInf.annee);
+         }
+         //ajouter les jours qui restent
+         jours += jour;
+         jours += nbreJoursMois(dateInf.mois, dateInf.annee) - dateInf.jour;
+      }else{
+         //ajouter les jours des années
+         for(unsigned i = dateInf.annee + 1; i < annee; i++){
+            if(estBissextile(i)) jours += 366;
+            else jours += 365;
+         }
+         //ajouter les jours des mois
+         for(unsigned i = dateInf.mois + 1; i <= 12; i++){
+            jours += nbreJoursMois(i, dateInf.annee);
+         }
+         for(unsigned i = 1;i < mois;i++){
+            jours += nbreJoursMois(i, annee);
+         }
+         //ajouter les jours qui restent
+         jours += jour;
+         jours += nbreJoursMois(dateInf.mois, dateInf.annee) - dateInf.jour;
 
-      for(unsigned i = date.annee;i < annee; i++){
-         if(estBissextile(i)) jours += 366;
-         else jours += 365;
       }
-      for(unsigned i = date.mois;i <= 12;i++){
-         jours += nbreJoursMois(i, date.annee);
-      }
-      for(unsigned i = 1;i <= mois;i++){
-         jours += nbreJoursMois(i, annee);
-      }
-      jours -= date.jour;
-      jours -= nbreJoursMois(mois,annee) - jour;
-
       return jours;
    }
 }
