@@ -18,9 +18,9 @@ using namespace std;
 int main() {
    Date *date = new Date(05,01,2021);
 
-   Date test = *date + 365;
+   Date test = *date - 365;
 
-   cout << test.jour;
+   cout << test.jour << " " << test.mois << " " << test.annee;
 
    return EXIT_SUCCESS;
 }

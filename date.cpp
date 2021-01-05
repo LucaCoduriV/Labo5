@@ -44,8 +44,9 @@ Date &Date::operator+=(unsigned int jours) {
    return *this;
 }
 
-Date Date::operator-(unsigned int jours) {
-   return Date(0, 0, 0);
+Date Date::operator-(int jours) const {
+   cout << "SOUSTRACTION" << endl;
+   return decrementer(jours);
 }
 
 Date &Date::operator-=(unsigned int jours) {
@@ -53,6 +54,7 @@ Date &Date::operator-=(unsigned int jours) {
 }
 
 unsigned Date::operator-(const Date &date) {
+   cout << "DIFFERENCE" << endl;
    return 0;
 }
 
@@ -80,24 +82,24 @@ Date Date::incrementer(unsigned jours) const{
 
 Date Date::decrementer(unsigned jours) const{
    cout << "jour: " << jour << " mois: " << mois << " annee: " << annee << endl;
-   unsigned jourTemp = jour;
-   unsigned moisTemp = mois;
-   unsigned anneeTemp = annee;
+   int jourTemp = (int)jour;
+   int moisTemp = (int)mois;
+   int anneeTemp = (int)annee;
 
-   jourTemp += jours;
-   while(jourTemp > jourDansMois(moisTemp, anneeTemp)){
-      jourTemp -= jourDansMois(moisTemp, anneeTemp);
-      moisTemp++;
-      if(moisTemp > 12){
-         moisTemp = 1;
-         anneeTemp++;
+   jourTemp -= (int)jours;
+   while(jourTemp < 1){
+      moisTemp--;
+      if(moisTemp < 1){
+         moisTemp = 12;
+         anneeTemp--;
       }
+      jourTemp += (int)jourDansMois((unsigned)moisTemp, (unsigned)anneeTemp);
    }
 
    cout << "jour: " << jourTemp << " mois: " << moisTemp << " annee: " << anneeTemp
         << endl;
 
-   return Date(jourTemp, moisTemp, anneeTemp);
+   return Date((unsigned)jourTemp, (unsigned)moisTemp, (unsigned)anneeTemp);
 }
 
 unsigned Date::jourDansMois(unsigned int mois, unsigned int annee) {
