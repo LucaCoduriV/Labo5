@@ -23,13 +23,20 @@ public:
    //<=
    //>=
    //!=
-
+   friend bool operator==(const Date& date1, const Date& date2);
+   friend bool operator!=(const Date& date1, const Date& date2);
+   friend bool operator<(const Date& date1, const Date& date2);
+   friend bool operator>(const Date& date1, const Date& date2);
+   friend bool operator<=(const Date& date1, const Date& date2);
+   friend bool operator>=(const Date& date1, const Date& date2);
+   /*
    bool operator==(const Date& date);
    bool operator!=(const Date& date);
    bool operator<(const Date& date); //chaipa pourquoi, mais les deux operateurs
    bool operator>(const Date& date); // fonctionnent à l'envers...
    bool operator<=(const Date& date);
    bool operator>=(const Date& date);
+   */
    Date operator+(unsigned jours) const;
    Date& operator+=(unsigned jours);
    Date& operator++();

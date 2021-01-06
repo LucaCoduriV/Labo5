@@ -10,10 +10,33 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 */
 
 #include "date.h"
+
 bool operator==(const Date& date1, const Date& date2) {
    return date1.annee == date2.annee && date1.mois == date2.mois && date1.jour ==
    date2.jour;
 }
+
+bool operator!=(const Date& date1, const Date& date2) {
+   return !(date1 == date2);
+}
+
+bool operator<(const Date& date1, const Date& date2) {
+   return date1.annee < date2.annee || (date1.annee == date2.annee && (date1.mois
+      < date2.mois || (date1.mois == date2.mois && date1.jour < date2.jour)));
+}
+
+bool operator>(const Date& date1, const Date& date2) {
+   return date2 < date1;
+}
+
+bool operator<=(const Date& date1, const Date& date2) {
+   return !(date1 > date2);
+}
+
+bool operator>=(const Date& date1, const Date& date2) {
+   return !(date1 < date2);
+}
+
 #include <iostream>
 #include <cstdlib>
 
@@ -37,7 +60,7 @@ unsigned short nbreJoursMois(unsigned mois, unsigned annee) {
          return 31;
    }
 }
-
+/*
 bool Date::operator==(const Date& date) {
    return this->annee == date.annee && this->mois == date.mois && this->jour ==
    date.jour;
@@ -64,7 +87,7 @@ bool Date::operator<=(const Date& date) {
 bool Date::operator>=(const Date& date) {
    return *this == date || *this > date;
 }
-
+*/
 Date::Date(unsigned int jour, unsigned int mois, unsigned int annee):jour(jour),
 mois(mois),annee(annee) {}
 
