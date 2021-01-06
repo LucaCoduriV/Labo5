@@ -10,28 +10,30 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 */
 
 #include "date.h"
+#include <string>
 #include <iostream>
+#include <cmath>
 #include <cstdlib>
 
 using namespace std;
 
-bool estBissextile(unsigned annee) {
-   return (annee % 400 == 0) || (annee % 4 == 0 && annee % 100 != 0);
+bool Date::estBissextile() const {
+    return (annee % 400 == 0) || (annee % 4 == 0 && annee % 100 != 0);
 }
 
-unsigned short nbreJoursMois(unsigned mois, unsigned annee) {
+unsigned Date::jourDansMois() const {
 
-   switch (mois) {
-      case 4:
-      case 6:
-      case 9:
-      case 11:
-         return 30;
-      case 2 :
-         return estBissextile(annee) ? 29 : 28;
-      default:
-         return 31;
-   }
+    switch (mois) {
+        case 4:
+        case 6:
+        case 9:
+        case 11:
+            return 30;
+        case 2 :
+            return estBissextile() ? 29 : 28;
+        default:
+            return 31;
+    }
 }
 
 Date::Date(unsigned int jour, unsigned int mois, unsigned int annee) : jour(jour),
@@ -71,11 +73,11 @@ unsigned Date::operator-(const Date &dateInf) const {
    } else if (dateInf.annee == annee) {
       //ajouter le nombre de jours dans les mois
       for (unsigned i = dateInf.mois + 1; i < mois; i++) {
-         jours += nbreJoursMois(i, dateInf.annee);
+         jours += jourDansMois();
       }
       //ajouter les jours qui restent
       jours += jour;
-      jours += nbreJoursMois(dateInf.mois, dateInf.annee) - dateInf.jour;
+      jours += jourDansMois() - dateInf.jour;
    } else {
       //ajouter les jours des années
       for (unsigned i = dateInf.annee + 1; i < annee; i++) {
@@ -84,14 +86,14 @@ unsigned Date::operator-(const Date &dateInf) const {
       }
       //ajouter les jours des mois
       for (unsigned i = dateInf.mois + 1; i <= 12; i++) {
-         jours += nbreJoursMois(i, dateInf.annee);
+         jours += jourDansMois();
       }
       for (unsigned i = 1; i < mois; i++) {
-         jours += nbreJoursMois(i, annee);
+         jours += jourDansMois();
       }
       //ajouter les jours qui restent
       jours += jour;
-      jours += nbreJoursMois(dateInf.mois, dateInf.annee) - dateInf.jour;
+      jours += jourDansMois() - dateInf.jour;
 
    }
    return jours;
@@ -105,8 +107,8 @@ Date Date::incrementer(unsigned jours) const {
    unsigned anneeTemp = annee;
 
    jourTemp += jours;
-   while (jourTemp > jourDansMois(moisTemp, anneeTemp)) {
-      jourTemp -= jourDansMois(moisTemp, anneeTemp);
+   while(jourTemp > jourDansMois()){
+      jourTemp -= jourDansMois();
       moisTemp++;
       if (moisTemp > 12) {
          moisTemp = 1;
@@ -133,7 +135,7 @@ Date Date::decrementer(unsigned jours) const {
          moisTemp = 12;
          anneeTemp--;
       }
-      jourTemp += (int) jourDansMois((unsigned) moisTemp, (unsigned) anneeTemp);
+      jourTemp += (int) jourDansMois();
    }
 
    cout << "jour: " << jourTemp << " mois: " << moisTemp << " annee: " << anneeTemp
@@ -142,13 +144,54 @@ Date Date::decrementer(unsigned jours) const {
    return Date((unsigned) jourTemp, (unsigned) moisTemp, (unsigned) anneeTemp);
 }
 
-unsigned Date::jourDansMois(unsigned int mois, unsigned int annee) {
-   return nbreJoursMois(mois, annee);
+ostream& operator<<(ostream& lhs, Date date) {
+    lhs << date("jj.mm.aaaa");
+    return lhs;
 }
 
-//unsigned Date::jourDansMois() const {
-//   return Date::jourDansMois(mois, annee);
-//}
+ostream& operator<<(ostream& lhs, const string& date) {
+    lhs << date;
+    return lhs;
+}
 
+string Date::operator()(const string& format) const {
+    const string SEP = format == "jj.mm.aaaa" || format == "aaaa.mm.jj" ? "." : "-";
+    string dateFormat;
+    if (format == "jj.mm.aaaa" || format == "jj-mm-aaaa") {
+        dateFormat = jourLitteral() +  SEP + moisLitteral() + SEP + anneeLitteral();
+    } else {
+        dateFormat = anneeLitteral() + SEP + moisLitteral() + SEP + jourLitteral();
+    }
+    return dateFormat;
+}
 
+string Date::jourLitteral() const {
+    string jourLit;
+    if ((int)log10(jour) == 0) {
+        jourLit += "0";
+    }
+    jourLit += to_string(jour);
+    return jourLit;
+}
+
+string Date::moisLitteral() const {
+    string moisLit;
+    if ((int)log10(mois) == 0) {
+        moisLit += "0";
+    }
+    moisLit += to_string(mois);
+    return moisLit;
+}
+
+string Date::anneeLitteral() const {
+    string anneeLit;
+    const unsigned NB_ANNEES = 4;
+    if (annee && ceil(log10(annee)) < NB_ANNEES) {
+        for (unsigned i = (unsigned)log10(annee); i < NB_ANNEES - 1; ++i) {
+            anneeLit += "0";
+        }
+    }
+    anneeLit += to_string(annee);
+    return anneeLit;
+}
 
