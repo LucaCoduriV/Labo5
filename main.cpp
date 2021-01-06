@@ -3,8 +3,10 @@
 Nom du fichier  : main.cpp
 Auteur(s)       : Chloé Fontaine & Tania Nunez & Luca Coduri
 Date creation   : 05.01.2021
-Description     : <à compléter>
-Remarque(s)     : <à compléter>
+Description     : Ce module permet de tester les fonctionnalités de la classe Date
+                  Deux objets de cette classe sont instanciés afin de tester les
+                  différents opérateurs et méthodes de Date.
+Remarque(s)     : -
 Compilateur     : Mingw-w64 g++ 8.1.0
 -----------------------------------------------------------------------------------
 */

@@ -3,8 +3,9 @@
 Nom du fichier  : date.cpp
 Auteur(s)       : Chloé Fontaine & Tania Nunez & Luca Coduri
 Date creation   : 05.01.2021
-Description     : <à compléter>
-Remarque(s)     : <à compléter>
+Description     : Ce module contient l'implémentation des méthodes et opérateurs de
+                  la classe Date déclarée dans le fichier date.h.
+Remarque(s)     : -
 Compilateur     : Mingw-w64 g++ 8.1.0
 -----------------------------------------------------------------------------------
 */
