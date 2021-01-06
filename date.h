@@ -18,6 +18,12 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 class Date {
 public:
    explicit Date(unsigned jour = 0, unsigned mois = 0, unsigned annee = 0);
+   unsigned getJour() const;
+   unsigned getMois() const;
+   unsigned getAnnee() const;
+   void setJour(unsigned nouveauJour);
+   void setMois(unsigned nouveauMois);
+   void setAnnee(unsigned nouvelleAnnee);
 
    bool operator==(const Date& date) const;
    bool operator!=(const Date& date) const;
@@ -37,10 +43,9 @@ public:
 
    friend std::ostream& operator<<(std::ostream& lhs, Date date);
    std::string operator()(const std::string& format) const;
-   bool estBissextile() const;
    static bool estBissextile(unsigned anne);
-   unsigned jourDansMois() const;
-   static unsigned jourDansMois(unsigned mois, unsigned anne);
+   unsigned joursDansMois() const;
+   static unsigned joursDansMois(unsigned mois, unsigned anne);
    std::string jourLitteral() const;
    std::string moisLitteral() const;
    std::string anneeLitteral() const;

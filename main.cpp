@@ -20,7 +20,7 @@ int main() {
 
    cout << date << endl;
    date = date - 2;
-   cout << date("aaaa.kmm.jj") << endl;
+   cout << date("aaaa.mm-jj") << endl;
 
    return EXIT_SUCCESS;
 }
