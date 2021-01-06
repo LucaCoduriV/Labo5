@@ -19,12 +19,12 @@ class Date {
 public:
    explicit Date(unsigned jour = 0, unsigned mois = 0, unsigned annee = 0);
 
-   bool operator==(const Date& date);
-   bool operator!=(const Date& date);
-   bool operator<(const Date& date);
-   bool operator>(Date date);
-   bool operator<=(const Date& date);
-   bool operator>=(const Date& date);
+   bool operator==(const Date& date) const;
+   bool operator!=(const Date& date) const;
+   bool operator<(const Date& date) const;
+   bool operator>(const Date& date) const;
+   bool operator<=(const Date& date) const;
+   bool operator>=(const Date& date) const;
    Date operator+(unsigned jours) const;
    Date& operator+=(unsigned jours);
    Date& operator++();
