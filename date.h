@@ -37,7 +37,7 @@ public:
    Date operator++(int);
    Date operator-(int jours) const;
    Date& operator-=(unsigned jours);
-   unsigned operator-(const Date& dateInf) const;
+   long long operator-(const Date& dateInf) const;
    Date& operator--();
    Date operator--(int);
 

@@ -16,11 +16,9 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 using namespace std;
 
 int main() {
-   Date date2(3,2,2021);
-   Date date(1,1,2021);
+   Date date(1,1,2001);
+   Date date2(11,9,2057);
 
-   unsigned test = -31;
-   cout << test << endl;
    cout << "NEW: " << date - date2 << endl;
 
    return EXIT_SUCCESS;

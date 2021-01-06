@@ -126,24 +126,37 @@ Date &Date::operator-=(unsigned int jours) {
    return *this;
 }
 
-unsigned Date::operator-(const Date &dateInf) const {
-   unsigned nbJour = 0;
-   for (unsigned i = dateInf.annee; i < annee; i++) {
+long long Date::operator-(const Date &dateInf) const {
+   Date dateTempSup(0,0,0);
+   Date dateTempInf(0,0,0);
+   int signe = 1;
+
+   if(*this > dateInf){
+      dateTempSup = *this;
+      dateTempInf = dateInf;
+   }else{
+      signe = -1;
+      dateTempSup = dateInf;
+      dateTempInf = *this;
+   }
+
+   long long nbJour = 0;
+   for (unsigned i = dateTempInf.annee; i < dateTempSup.annee; i++) {
       if (estBissextile(i)) nbJour++;
    }
 
-   for (unsigned i = 1; i < mois; i++) {
-      nbJour += joursDansMois(i, annee);
+   for (unsigned i = 1; i < dateTempSup.mois; i++) {
+      nbJour += joursDansMois(i, dateTempSup.annee);
    }
 
-   for (unsigned i = 1; i < dateInf.mois; i++) {
-      nbJour += joursDansMois(i, annee);
+   for (unsigned i = 1; i < dateTempInf.mois; i++) {
+      nbJour += joursDansMois(i, dateTempSup.annee);
    }
 
-   nbJour += (annee - dateInf.annee) * 365;
-   nbJour += jour;
-   nbJour -= dateInf.jour;
-   return nbJour;
+   nbJour += (dateTempSup.annee - dateTempInf.annee) * 365;
+   nbJour += dateTempSup.jour;
+   nbJour -= dateTempInf.jour;
+   return nbJour * signe;
 }
 
 Date& Date::operator--() {
