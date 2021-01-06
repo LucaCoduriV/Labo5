@@ -16,11 +16,12 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 using namespace std;
 
 int main() {
-   Date date(1,1,2022);
+   Date date2(3,2,2021);
+   Date date(1,1,2021);
 
-   cout << date << endl;
-   date = date - 2;
-   cout << date("aaaa.kmm.jj") << endl;
+   unsigned test = -31;
+   cout << test << endl;
+   cout << "NEW: " << date - date2 << endl;
 
    return EXIT_SUCCESS;
 }
