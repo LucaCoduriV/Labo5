@@ -38,12 +38,11 @@ public:
    friend std::ostream& operator<<(std::ostream& lhs, Date date);
    std::string operator()(const std::string& format) const;
    bool estBissextile() const;
-   //static estBissextile(unsigned int annee)
    unsigned jourDansMois() const;
-   //static unsigned jourDansMois(unsigned int mois, unsigned int annee);
    std::string jourLitteral() const;
    std::string moisLitteral() const;
    std::string anneeLitteral() const;
+
 private:
    unsigned jour;
    unsigned mois;
