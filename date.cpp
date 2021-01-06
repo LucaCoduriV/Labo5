@@ -12,8 +12,6 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 
 #include "date.h"
 #include <string>
-#include <iostream>
-#include <cstdlib>
 #include <cmath>
 using namespace std;
 
@@ -246,7 +244,7 @@ string Date::anneeLitteral() const {
     string anneeLit;
     const unsigned NB_ANNEES = 4;
     if (annee && ceil(log10(annee)) < NB_ANNEES) {
-        for (unsigned i = (unsigned)log10(annee); i < NB_ANNEES - 1; ++i) {
+        for (auto i = (unsigned)log10(annee); i < NB_ANNEES - 1; ++i) {
             anneeLit += "0";
         }
     }
