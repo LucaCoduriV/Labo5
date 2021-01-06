@@ -49,7 +49,6 @@ private:
    unsigned jour;
    unsigned mois;
    unsigned annee;
-
    Date incrementer(unsigned jours) const;
    Date decrementer(unsigned jours) const;
 };
