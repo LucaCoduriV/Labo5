@@ -19,21 +19,21 @@ class Date {
 public:
    explicit Date(unsigned jour = 0, unsigned mois = 0, unsigned annee = 0);
 
-   //<
-   //>
-   //==
-   //<=
-   //>=
-   //!=
-   //++ gauche et droite
-   //-- gauche et droite
-
-
+   bool operator==(const Date& date);
+   bool operator!=(const Date& date);
+   bool operator<(const Date& date);
+   bool operator>(Date date);
+   bool operator<=(const Date& date);
+   bool operator>=(const Date& date);
    Date operator+(unsigned jours) const;
    Date& operator+=(unsigned jours);
+   Date& operator++();
+   Date operator++(int);
    Date operator-(int jours) const;
    Date& operator-=(unsigned jours);
    unsigned operator-(const Date& dateInf) const;
+   Date& operator--();
+   Date operator--(int);
 
    friend std::ostream& operator<<(std::ostream& lhs, Date date);
    std::string operator()(const std::string& format) const;

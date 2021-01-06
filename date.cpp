@@ -41,10 +41,34 @@ unsigned Date::jourDansMois(unsigned int mois, unsigned int anne) {
    }
 }
 
-Date::Date(unsigned int jour, unsigned int mois, unsigned int annee) : jour(jour),
-                                                                       mois(mois),
-                                                                       annee(
-                                                                          annee) {}
+bool Date::operator==(const Date& date) {
+   return annee == date.annee && mois == date.mois && jour ==
+   date.jour;
+}
+
+bool Date::operator!=(const Date& date) {
+  return !(*this == date);
+}
+
+bool Date::operator<(const Date& date){
+  return annee < date.annee || (annee == date.annee &&
+  (mois < date.mois || (mois == date.mois && jour < date.jour)));
+}
+
+bool Date::operator>(Date date) {
+   return date < *this;
+}
+
+bool Date::operator<=(const Date& date) {
+  return !(*this > date);
+}
+
+bool Date::operator>=(const Date& date) {
+   return !(*this < date);
+}
+
+Date::Date(unsigned int jour, unsigned int mois, unsigned int annee):jour(jour),
+mois(mois),annee(annee) {}
 
 Date Date::operator+(unsigned jours) const {
    return incrementer(jours);
@@ -56,6 +80,17 @@ Date &Date::operator+=(unsigned int jours) {
    mois = date.mois;
    annee = date.annee;
    return *this;
+}
+
+Date& Date::operator++() {
+   *this = incrementer(1);
+   return *this;
+}
+
+Date Date::operator++(int) {
+   Date temp = *this;
+   *this = incrementer(1);
+   return temp;
 }
 
 Date Date::operator-(int jours) const {
@@ -105,7 +140,18 @@ unsigned Date::operator-(const Date &dateInf) const {
 
 }
 
-Date Date::incrementer(unsigned jours) const {
+Date& Date::operator--() {
+   this->decrementer(1);
+   return *this;
+}
+
+Date Date::operator--(int) {
+   Date temp = *this;
+   this->decrementer(1);
+   return temp;
+}
+
+Date Date::incrementer(unsigned jours) const{
    cout << "jour: " << jour << " mois: " << mois << " annee: " << annee << endl;
    unsigned jourTemp = jour;
    unsigned moisTemp = mois;
