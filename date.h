@@ -26,11 +26,17 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 class Date {
 public:
    explicit Date(unsigned jour = 0, unsigned mois = 0, unsigned annee = 0);
+   unsigned getJour() const;
+   unsigned getMois() const;
+   unsigned getAnnee() const;
+   void setJour(unsigned nouveauJour);
+   void setMois(unsigned nouveauMois);
+   void setAnnee(unsigned nouvelleAnnee);
 
    bool operator==(const Date& date) const;
    bool operator!=(const Date& date) const;
-   bool operator<(const Date& date) const; //Une date est plus petite qu'une autre
-   bool operator>(const Date& date) const; // si elle est antérieure.
+   bool operator<(const Date& date) const;
+   bool operator>(const Date& date) const;
    bool operator<=(const Date& date) const;
    bool operator>=(const Date& date) const;
    Date operator+(unsigned jours) const;
@@ -39,16 +45,15 @@ public:
    Date operator++(int);
    Date operator-(int jours) const;
    Date& operator-=(unsigned jours);
-   unsigned operator-(const Date& dateInf) const; //Calcule le nombre de jours
-   Date& operator--();                            // entre les deux dates.
+   long long operator-(const Date& dateInf) const;
+   Date& operator--();
    Date operator--(int);
 
    friend std::ostream& operator<<(std::ostream& lhs, Date date);
-   std::string operator()(const std::string& format) const; // Choix des formats
-   bool estBissextile() const;                              // jj-mm-aaaa, aaaa.mm.jj
-   static bool estBissextile(unsigned anne);                // ou aaaa-mm-jj.
-   unsigned jourDansMois() const;
-   static unsigned jourDansMois(unsigned mois, unsigned anne);
+   std::string operator()(const std::string& format) const;
+   static bool estBissextile(unsigned anne);
+   unsigned joursDansMois() const;
+   static unsigned joursDansMois(unsigned mois, unsigned anne);
    std::string jourLitteral() const;
    std::string moisLitteral() const;
    std::string anneeLitteral() const;

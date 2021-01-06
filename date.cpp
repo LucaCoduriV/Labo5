@@ -15,20 +15,44 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
-
 using namespace std;
 
-bool Date::estBissextile() const {
-   return estBissextile(annee);
+Date::Date(unsigned int jour, unsigned int mois, unsigned int annee):jour(jour),
+    mois(mois),annee(annee) {}
+
+unsigned Date::getJour() const {
+    return jour;
 }
+
+unsigned Date::getMois() const {
+    return mois;
+}
+
+unsigned Date::getAnnee() const {
+    return annee;
+}
+
+void Date::setJour(unsigned int nouveauJour) {
+    jour = nouveauJour;
+}
+
+void Date::setMois(unsigned int nouveauMois) {
+    mois = nouveauMois;
+}
+
+void Date::setAnnee(unsigned int nouvelleAnnee) {
+    annee = nouvelleAnnee;
+}
+
+
 bool Date::estBissextile(unsigned annee) {
    return (annee % 400 == 0) || (annee % 4 == 0 && annee % 100 != 0);
 }
 
-unsigned Date::jourDansMois() const {
-    return jourDansMois(mois, annee);
+unsigned Date::joursDansMois() const {
+    return joursDansMois(mois, annee);
 }
-unsigned Date::jourDansMois(unsigned int mois, unsigned int annee) {
+unsigned Date::joursDansMois(unsigned int mois, unsigned int annee) {
    switch (mois) {
       case 4:
       case 6:
@@ -68,9 +92,6 @@ bool Date::operator>=(const Date& date) const{
    return !(*this < date);
 }
 
-Date::Date(unsigned int jour, unsigned int mois, unsigned int annee):jour(jour),
-mois(mois),annee(annee) {}
-
 Date Date::operator+(unsigned jours) const {
    return incrementer(jours);
 }
@@ -106,39 +127,37 @@ Date &Date::operator-=(unsigned int jours) {
    return *this;
 }
 
-unsigned Date::operator-(const Date &dateInf) const {
-   // TODO vérifier que la dateInf est plus petite avant;
-   unsigned jours = 0;
-   if (dateInf.annee == annee && dateInf.mois == mois) {
-      return jour - dateInf.jour;
-   } else if (dateInf.annee == annee) {
-      //ajouter le nombre de jours dans les mois
-      for (unsigned i = dateInf.mois + 1; i < mois; i++) {
-         jours += jourDansMois(i, annee);
-      }
-      //ajouter les jours qui restent
-      jours += jour;
-      jours += dateInf.jourDansMois() - dateInf.jour;
-   } else {
-      //ajouter les jours des années
-      for (unsigned i = dateInf.annee + 1; i < annee; i++) {
-         if (estBissextile(i)) jours += 366;
-         else jours += 365;
-      }
-      //ajouter les jours des mois
-      for (unsigned i = dateInf.mois + 1; i <= 12; i++) {
-         jours += jourDansMois(i, dateInf.annee);
-      }
-      for (unsigned i = 1; i < mois; i++) {
-         jours += jourDansMois(i, annee);
-      }
-      //ajouter les jours qui restent
-      jours += jour;
-      jours += jourDansMois(dateInf.mois, dateInf.annee) - dateInf.jour;
+long long Date::operator-(const Date &dateInf) const {
+   Date dateTempSup(0,0,0);
+   Date dateTempInf(0,0,0);
+   int signe = 1;
 
+   if(*this > dateInf){
+      dateTempSup = *this;
+      dateTempInf = dateInf;
+   }else{
+      signe = -1;
+      dateTempSup = dateInf;
+      dateTempInf = *this;
    }
-   return jours;
 
+   long long nbJour = 0;
+   for (unsigned i = dateTempInf.annee; i < dateTempSup.annee; i++) {
+      if (estBissextile(i)) nbJour++;
+   }
+
+   for (unsigned i = 1; i < dateTempSup.mois; i++) {
+      nbJour += joursDansMois(i, dateTempSup.annee);
+   }
+
+   for (unsigned i = 1; i < dateTempInf.mois; i++) {
+      nbJour += joursDansMois(i, dateTempSup.annee);
+   }
+
+   nbJour += (dateTempSup.annee - dateTempInf.annee) * 365;
+   nbJour += dateTempSup.jour;
+   nbJour -= dateTempInf.jour;
+   return nbJour * signe;
 }
 
 Date& Date::operator--() {
@@ -158,8 +177,8 @@ Date Date::incrementer(unsigned jours) const{
    unsigned anneeTemp = annee;
 
    jourTemp += jours;
-   while(jourTemp > jourDansMois()){
-      jourTemp -= jourDansMois();
+   while(jourTemp > joursDansMois()){
+      jourTemp -= joursDansMois();
       moisTemp++;
       if (moisTemp > 12) {
          moisTemp = 1;
@@ -181,7 +200,7 @@ Date Date::decrementer(unsigned jours) const {
          moisTemp = 12;
          anneeTemp--;
       }
-      jourTemp += (int)jourDansMois();
+      jourTemp += (int) joursDansMois();
    }
 
    return Date((unsigned) jourTemp, (unsigned) moisTemp, (unsigned) anneeTemp);
@@ -192,18 +211,15 @@ ostream& operator<<(ostream& lhs, Date date) {
     return lhs;
 }
 
-ostream& operator<<(ostream& lhs, const string& date) {
-    lhs << date;
-    return lhs;
-}
-
 string Date::operator()(const string& format) const {
     const string SEP = format == "jj.mm.aaaa" || format == "aaaa.mm.jj" ? "." : "-";
     string dateFormat;
     if (format == "jj.mm.aaaa" || format == "jj-mm-aaaa") {
         dateFormat = jourLitteral() +  SEP + moisLitteral() + SEP + anneeLitteral();
-    } else {
+    } else if (format == "aaaa.mm.jj" || format == "aaaa-mm-jj") {
         dateFormat = anneeLitteral() + SEP + moisLitteral() + SEP + jourLitteral();
+    } else {
+        return "Format incompatible.";
     }
     return dateFormat;
 }
