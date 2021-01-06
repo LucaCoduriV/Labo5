@@ -16,11 +16,12 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 using namespace std;
 
 int main() {
-   Date *date = new Date(05,02,2021);
-   Date *date2 = new Date(05,01,2021);
-   if (date < date2) {cout << "coucou" << endl;}
-   cout << *date - *date2;
-
+   Date *date = new Date(05,01,2021);
+   Date *date2 = new Date(04,01,2021);
+   if (*date2 > *date) {cout << "coucou" << endl;}
+   cout << (*date).jour;
+   ++*date;
+   cout << (*date).jour;
    //cout << test.jour << "." << test.mois << "." << test.annee;
    //cout << date->jour << "." << date->mois << "." << date->annee;
 

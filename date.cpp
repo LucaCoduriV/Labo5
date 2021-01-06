@@ -10,33 +10,6 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 */
 
 #include "date.h"
-
-bool operator==(const Date& date1, const Date& date2) {
-   return date1.annee == date2.annee && date1.mois == date2.mois && date1.jour ==
-   date2.jour;
-}
-
-bool operator!=(const Date& date1, const Date& date2) {
-   return !(date1 == date2);
-}
-
-bool operator<(const Date& date1, const Date& date2) {
-   return date1.annee < date2.annee || (date1.annee == date2.annee && (date1.mois
-      < date2.mois || (date1.mois == date2.mois && date1.jour < date2.jour)));
-}
-
-bool operator>(const Date& date1, const Date& date2) {
-   return date2 < date1;
-}
-
-bool operator<=(const Date& date1, const Date& date2) {
-   return !(date1 > date2);
-}
-
-bool operator>=(const Date& date1, const Date& date2) {
-   return !(date1 < date2);
-}
-
 #include <iostream>
 #include <cstdlib>
 
@@ -60,9 +33,9 @@ unsigned short nbreJoursMois(unsigned mois, unsigned annee) {
          return 31;
    }
 }
-/*
+
 bool Date::operator==(const Date& date) {
-   return this->annee == date.annee && this->mois == date.mois && this->jour ==
+   return annee == date.annee && mois == date.mois && jour ==
    date.jour;
 }
 
@@ -70,24 +43,23 @@ bool Date::operator!=(const Date& date) {
   return !(*this == date);
 }
 
-bool Date::operator<(const Date& date) {
-  return this->annee < date.annee || (this->annee == date.annee &&
-  (this->mois < date.mois || (this->mois == date.mois && this->jour < date.jour)));
+bool Date::operator<(const Date& date){
+  return annee < date.annee || (annee == date.annee &&
+  (mois < date.mois || (mois == date.mois && jour < date.jour)));
 }
 
-bool Date::operator>(const Date& date) {
-   return this->annee > date.annee || (this->annee == date.annee &&
-   (this->mois > date.mois || (this->mois == date.mois && this->jour > date.jour)));
+bool Date::operator>(Date date) {
+   return date < *this;
 }
 
 bool Date::operator<=(const Date& date) {
-  return *this == date || *this < date;
+  return !(*this > date);
 }
 
 bool Date::operator>=(const Date& date) {
-   return *this == date || *this > date;
+   return !(*this < date);
 }
-*/
+
 Date::Date(unsigned int jour, unsigned int mois, unsigned int annee):jour(jour),
 mois(mois),annee(annee) {}
 
@@ -104,13 +76,13 @@ Date &Date::operator+=(unsigned int jours) {
 }
 
 Date& Date::operator++() {
-   this->incrementer(1);
+   *this = incrementer(1);
    return *this;
 }
 
 Date Date::operator++(int) {
    Date temp = *this;
-   this->incrementer(1);
+   *this = incrementer(1);
    return temp;
 }
 
