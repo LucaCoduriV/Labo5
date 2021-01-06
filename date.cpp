@@ -81,7 +81,7 @@ unsigned Date::operator-(const Date &dateInf) const {
    } else {
       //ajouter les jours des années
       for (unsigned i = dateInf.annee + 1; i < annee; i++) {
-         if (estBissextile(i)) jours += 366;
+         if (estBissextile()) jours += 366;
          else jours += 365;
       }
       //ajouter les jours des mois
