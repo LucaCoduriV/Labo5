@@ -18,22 +18,27 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 using namespace std;
 
 bool Date::estBissextile() const {
-    return (annee % 400 == 0) || (annee % 4 == 0 && annee % 100 != 0);
+   return estBissextile(annee);
+}
+bool Date::estBissextile(unsigned annee) {
+   return (annee % 400 == 0) || (annee % 4 == 0 && annee % 100 != 0);
 }
 
 unsigned Date::jourDansMois() const {
-
-    switch (mois) {
-        case 4:
-        case 6:
-        case 9:
-        case 11:
-            return 30;
-        case 2 :
-            return estBissextile() ? 29 : 28;
-        default:
-            return 31;
-    }
+    return jourDansMois(mois, annee);
+}
+unsigned Date::jourDansMois(unsigned int mois, unsigned int anne) {
+   switch (mois) {
+      case 4:
+      case 6:
+      case 9:
+      case 11:
+         return 30;
+      case 2 :
+         return estBissextile(anne) ? 29 : 28;
+      default:
+         return 31;
+   }
 }
 
 Date::Date(unsigned int jour, unsigned int mois, unsigned int annee) : jour(jour),
@@ -73,11 +78,11 @@ unsigned Date::operator-(const Date &dateInf) const {
    } else if (dateInf.annee == annee) {
       //ajouter le nombre de jours dans les mois
       for (unsigned i = dateInf.mois + 1; i < mois; i++) {
-         jours += nbreJoursMois(i, dateInf.annee);
+         jours += jourDansMois(i, annee);
       }
       //ajouter les jours qui restent
       jours += jour;
-      jours += nbreJoursMois(dateInf.mois, dateInf.annee) - dateInf.jour;
+      jours += dateInf.jourDansMois() - dateInf.jour;
    } else {
       //ajouter les jours des années
       for (unsigned i = dateInf.annee + 1; i < annee; i++) {
@@ -86,14 +91,14 @@ unsigned Date::operator-(const Date &dateInf) const {
       }
       //ajouter les jours des mois
       for (unsigned i = dateInf.mois + 1; i <= 12; i++) {
-         jours += nbreJoursMois(i, dateInf.annee);
+         jours += jourDansMois(i, dateInf.annee);
       }
       for (unsigned i = 1; i < mois; i++) {
-         jours += nbreJoursMois(i, annee);
+         jours += jourDansMois(i, annee);
       }
       //ajouter les jours qui restent
       jours += jour;
-      jours += nbreJoursMois(dateInf.mois, dateInf.annee) - dateInf.jour;
+      jours += jourDansMois(dateInf.mois, dateInf.annee) - dateInf.jour;
 
    }
    return jours;
@@ -194,4 +199,8 @@ string Date::anneeLitteral() const {
     anneeLit += to_string(annee);
     return anneeLit;
 }
+
+
+
+
 
