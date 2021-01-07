@@ -2,17 +2,21 @@
 -----------------------------------------------------------------------------------
 Nom du fichier  : date.h
 Auteur(s)       : Chloé Fontaine & Tania Nunez & Luca Coduri
-Date creation   : 05.01.2021
+Date création   : 05.01.2021
+
 Description     : Ce module contient la déclaration de la classe Date. Cette
                   classe possède trois données membres qui représentent l'année,
                   le mois et le jour à l'aide d'unsigned int. Elle est munie d'un
                   constructeur et d'opérateurs de comparaison, arithmétiques et
-                  d'affichage. Les corps de méthodes et surcharge sont implémentés
-                  dans le fichier date.cpp.
+                  d'affichage. Les méthodes et surcharges sont implémentées dans le
+                  fichier date.cpp.
+
 Remarque(s)     : Il est possible de changer le format d'affichage d'un objet Date.
                   Par défaut "jj.mm.aaaa", mais il est possible de choisir entre
-                  trois autres formats. INDIQUER LES FORMATS POSSIBLES !!!!
-                  La classe Date a été n'est valide que pour le calendrier Grégorien.
+                  trois autres formats : "jj-mm-aaaa", "aaaa.mm.jj", "aaaa-mm-jj".
+                  Attention : la classe Date n'est valide que pour le calendrier
+                  Grégorien.
+
 Compilateur     : Mingw-w64 g++ 8.1.0
 -----------------------------------------------------------------------------------
 */
@@ -24,14 +28,17 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 #include <string>
 
 class Date {
+
    friend bool operator==(const Date& lDate, const Date& rDate);
    friend bool operator!=(const Date& lDate, const Date& rDate);
    friend bool operator<(const Date& lDate, const Date& rDate);
-   friend bool operator>(const Date& lDate, const Date& rDate);
    friend bool operator<=(const Date& lDate, const Date& rDate);
+   friend bool operator>(const Date& lDate, const Date& rDate);
    friend bool operator>=(const Date& lDate, const Date& rDate);
-   friend std::ostream& operator<<(std::ostream& lhs, Date date);
+   friend std::ostream& operator<<(std::ostream& lhs,const Date& date);
+
 public:
+
    explicit Date(unsigned jour = 0, unsigned mois = 0, unsigned annee = 0);
    unsigned getJour() const;
    unsigned getMois() const;
@@ -55,12 +62,12 @@ public:
    static unsigned joursDansMois(unsigned mois, unsigned anne);
 
 private:
+
    unsigned jour;
    unsigned mois;
    unsigned annee;
    static Date incrementer(const Date& date, unsigned jours);
    static Date decrementer(const Date& date, unsigned jours);
 };
-
 
 #endif
