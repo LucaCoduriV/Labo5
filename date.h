@@ -24,6 +24,12 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 #include <string>
 
 class Date {
+   friend bool operator==(const Date& lDate, const Date& rDate);
+   friend bool operator!=(const Date& lDate, const Date& rDate);
+   friend bool operator<(const Date& lDate, const Date& rDate);
+   friend bool operator>(const Date& lDate, const Date& rDate);
+   friend bool operator<=(const Date& lDate, const Date& rDate);
+   friend bool operator>=(const Date& lDate, const Date& rDate);
 public:
    explicit Date(unsigned jour = 0, unsigned mois = 0, unsigned annee = 0);
    unsigned getJour() const;
@@ -32,13 +38,6 @@ public:
    void setJour(unsigned nouveauJour);
    void setMois(unsigned nouveauMois);
    void setAnnee(unsigned nouvelleAnnee);
-
-   bool operator==(const Date& date) const;
-   bool operator!=(const Date& date) const;
-   bool operator<(const Date& date) const;
-   bool operator>(const Date& date) const;
-   bool operator<=(const Date& date) const;
-   bool operator>=(const Date& date) const;
    Date operator+(unsigned jours) const;
    Date& operator+=(unsigned jours);
    Date& operator++();
@@ -54,9 +53,6 @@ public:
    static bool estBissextile(unsigned anne);
    unsigned joursDansMois() const;
    static unsigned joursDansMois(unsigned mois, unsigned anne);
-   std::string jourLitteral() const;
-   std::string moisLitteral() const;
-   std::string anneeLitteral() const;
 
 private:
    unsigned jour;

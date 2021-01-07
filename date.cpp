@@ -13,7 +13,35 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 #include "date.h"
 #include <string>
 #include <cmath>
+#include <iomanip>
 using namespace std;
+
+bool operator==(const Date& lDate, const Date& rDate) {
+   return lDate.annee == rDate.annee && lDate.mois == rDate.mois && lDate.jour ==
+                                                                    rDate.jour;
+}
+
+bool operator!=(const Date& lDate, const Date& rDate) {
+   return !(lDate == rDate);
+}
+
+bool operator<(const Date& lDate, const Date& rDate) {
+   return lDate.annee < rDate.annee || (lDate.annee == rDate.annee &&
+         (lDate.mois < rDate.mois || (lDate.mois == rDate.mois &&
+          lDate.jour < rDate.jour)));
+}
+
+bool operator>(const Date& lDate, const Date& rDate) {
+   return rDate < lDate;
+}
+
+bool operator<=(const Date& lDate, const Date& rDate) {
+   return !(lDate > rDate);
+}
+
+bool operator>=(const Date& lDate, const Date& rDate) {
+   return !(lDate < rDate);
+}
 
 Date::Date(unsigned int jour, unsigned int mois, unsigned int annee):jour(jour),
     mois(mois),annee(annee) {}
@@ -62,32 +90,6 @@ unsigned Date::joursDansMois(unsigned int mois, unsigned int annee) {
       default:
          return 31;
    }
-}
-
-bool Date::operator==(const Date& date) const{
-   return annee == date.annee && mois == date.mois && jour ==
-   date.jour;
-}
-
-bool Date::operator!=(const Date& date) const{
-  return !(*this == date);
-}
-
-bool Date::operator<(const Date& date) const{
-  return annee < date.annee || (annee == date.annee &&
-  (mois < date.mois || (mois == date.mois && jour < date.jour)));
-}
-
-bool Date::operator>(const Date& date) const{
-   return date < *this;
-}
-
-bool Date::operator<=(const Date& date) const{
-  return !(*this > date);
-}
-
-bool Date::operator>=(const Date& date) const{
-   return !(*this < date);
 }
 
 Date Date::operator+(unsigned jours) const {
@@ -211,50 +213,16 @@ ostream& operator<<(ostream& lhs, Date date) {
 
 string Date::operator()(const string& format) const {
     const string SEP = format == "jj.mm.aaaa" || format == "aaaa.mm.jj" ? "." : "-";
-    string dateFormat;
+    ostringstream dateFormat;
     if (format == "jj.mm.aaaa" || format == "jj-mm-aaaa") {
-        dateFormat = jourLitteral() +  SEP + moisLitteral() + SEP + anneeLitteral();
+        dateFormat << setfill('0') << setw(2) << jour << SEP <<  setw(2)
+                   << mois << SEP << setw(4) << annee;
     } else if (format == "aaaa.mm.jj" || format == "aaaa-mm-jj") {
-        dateFormat = anneeLitteral() + SEP + moisLitteral() + SEP + jourLitteral();
+        dateFormat << setfill('0') << setw(4) << annee << SEP << setw(2)
+                   << mois << SEP << setw(2) << annee;
     } else {
-        return "Format incompatible.";
+        dateFormat << "Format incompatible.";
     }
-    return dateFormat;
+    return dateFormat.str();
 }
-
-string Date::jourLitteral() const {
-    string jourLit;
-    if ((int)log10(jour) == 0) {
-        jourLit += "0";
-    }
-    jourLit += to_string(jour);
-    return jourLit;
-}
-
-string Date::moisLitteral() const {
-    string moisLit;
-    if ((int)log10(mois) == 0) {
-        moisLit += "0";
-    }
-    moisLit += to_string(mois);
-    return moisLit;
-}
-
-string Date::anneeLitteral() const {
-    string anneeLit;
-    const unsigned NB_ANNEES = 4;
-    if (annee && ceil(log10(annee)) < NB_ANNEES) {
-        for (auto i = (unsigned)log10(annee); i < NB_ANNEES - 1; ++i) {
-            anneeLit += "0";
-        }
-    }
-    anneeLit += to_string(annee);
-    return anneeLit;
-}
-
-
-
-
-
-
 
