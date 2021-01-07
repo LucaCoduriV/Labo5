@@ -11,7 +11,7 @@ Description     : Ce module contient la déclaration de la classe Date. Cette
                   dans le fichier date.cpp.
 Remarque(s)     : Il est possible de changer le format d'affichage d'un objet Date.
                   Par défaut "jj.mm.aaaa", mais il est possible de choisir entre
-                  trois autres formats.
+                  trois autres formats. INDIQUER LES FORMATS POSSIBLES !!!!
                   La classe Date a été n'est valide que pour le calendrier Grégorien.
 Compilateur     : Mingw-w64 g++ 8.1.0
 -----------------------------------------------------------------------------------
