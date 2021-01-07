@@ -91,11 +91,11 @@ bool Date::operator>=(const Date& date) const{
 }
 
 Date Date::operator+(unsigned jours) const {
-   return incrementer(jours);
+   return incrementer(*this, jours);
 }
 
 Date &Date::operator+=(unsigned int jours) {
-   Date date = incrementer(jours);
+   Date date = incrementer(*this, jours);
    jour = date.jour;
    mois = date.mois;
    annee = date.annee;
@@ -103,22 +103,22 @@ Date &Date::operator+=(unsigned int jours) {
 }
 
 Date& Date::operator++() {
-   *this = incrementer(1);
+   *this = incrementer(*this, 1);
    return *this;
 }
 
 Date Date::operator++(int) {
    const Date temp = *this;
-   *this = incrementer(1);
+   *this = incrementer(*this, 1);
    return temp;
 }
 
 Date Date::operator-(int jours) const {
-   return decrementer((unsigned) jours);
+   return decrementer(*this, (unsigned) jours);
 }
 
 Date &Date::operator-=(unsigned int jours) {
-   Date date = decrementer(jours);
+   Date date = decrementer(*this, jours);
    jour = date.jour;
    mois = date.mois;
    annee = date.annee;
@@ -159,46 +159,46 @@ long long Date::operator-(const Date &dateInf) const {
 }
 
 Date& Date::operator--() {
-   *this = this->decrementer(1);
+   *this = decrementer(*this, 1);
    return *this;
 }
 
 Date Date::operator--(int) {
    const Date temp = *this;
-   *this = this->decrementer(1);
+   *this = decrementer(*this, 1);
    return temp;
 }
 
-Date Date::incrementer(unsigned jours) const{
-   unsigned jourTemp = jour;
-   unsigned moisTemp = mois;
-   unsigned anneeTemp = annee;
+Date Date::incrementer(const Date &date, unsigned int jours) {
+   unsigned jourTemp = date.jour;
+   unsigned moisTemp = date.mois;
+   unsigned anneeTemp = date.annee;
 
    jourTemp += jours;
-   while(jourTemp > joursDansMois()){
-      jourTemp -= joursDansMois();
+   while(jourTemp > joursDansMois(moisTemp, anneeTemp)){
+      jourTemp -= joursDansMois(moisTemp, anneeTemp);
       moisTemp++;
       if (moisTemp > 12) {
          moisTemp = 1;
          anneeTemp++;
       }
    }
-   return Date(jourTemp, moisTemp, anneeTemp);
+   return Date((unsigned)jourTemp, (unsigned)moisTemp, (unsigned)anneeTemp);
 }
 
-Date Date::decrementer(unsigned jours) const {
-   int jourTemp = (int) jour;
-   int moisTemp = (int) mois;
-   int anneeTemp = (int) annee;
+Date Date::decrementer(const Date &date, unsigned int jours) {
+   long long jourTemp = date.jour;
+   long long moisTemp = date.mois;
+   long long anneeTemp = date.annee;
 
-   jourTemp -= (int) jours;
+   jourTemp -= jours;
    while (jourTemp < 1) {
       moisTemp--;
       if (moisTemp < 1) {
          moisTemp = 12;
          anneeTemp--;
       }
-      jourTemp += (int) joursDansMois();
+      jourTemp += joursDansMois((unsigned)moisTemp, (unsigned)anneeTemp);
    }
 
    return Date((unsigned) jourTemp, (unsigned) moisTemp, (unsigned) anneeTemp);
@@ -251,6 +251,8 @@ string Date::anneeLitteral() const {
     anneeLit += to_string(annee);
     return anneeLit;
 }
+
+
 
 
 

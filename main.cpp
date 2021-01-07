@@ -18,10 +18,10 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 using namespace std;
 
 int main() {
-   Date date(1,1,2001);
+   Date date(1,1,2021);
    Date date2(11,9,2057);
-
-   cout << "NEW: " << date - date2 << endl;
+   date--;
+   cout << "NEW: " << date << endl;
 
    return EXIT_SUCCESS;
 }
