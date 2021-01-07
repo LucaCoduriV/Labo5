@@ -30,6 +30,7 @@ class Date {
    friend bool operator>(const Date& lDate, const Date& rDate);
    friend bool operator<=(const Date& lDate, const Date& rDate);
    friend bool operator>=(const Date& lDate, const Date& rDate);
+   friend std::ostream& operator<<(std::ostream& lhs, Date date);
 public:
    explicit Date(unsigned jour = 0, unsigned mois = 0, unsigned annee = 0);
    unsigned getJour() const;
@@ -38,6 +39,7 @@ public:
    void setJour(unsigned nouveauJour);
    void setMois(unsigned nouveauMois);
    void setAnnee(unsigned nouvelleAnnee);
+
    Date operator+(unsigned jours) const;
    Date& operator+=(unsigned jours);
    Date& operator++();
@@ -47,11 +49,9 @@ public:
    long long operator-(const Date& dateInf) const;
    Date& operator--();
    Date operator--(int);
-
-   friend std::ostream& operator<<(std::ostream& lhs, Date date);
    std::string operator()(const std::string& format) const;
+
    static bool estBissextile(unsigned anne);
-   unsigned joursDansMois() const;
    static unsigned joursDansMois(unsigned mois, unsigned anne);
 
 private:

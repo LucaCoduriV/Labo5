@@ -11,8 +11,6 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 */
 
 #include "date.h"
-#include <string>
-#include <cmath>
 #include <iomanip>
 using namespace std;
 
@@ -75,9 +73,6 @@ bool Date::estBissextile(unsigned annee) {
    return (annee % 400 == 0) || (annee % 4 == 0 && annee % 100 != 0);
 }
 
-unsigned Date::joursDansMois() const {
-    return joursDansMois(mois, annee);
-}
 unsigned Date::joursDansMois(unsigned int mois, unsigned int annee) {
    switch (mois) {
       case 4:
