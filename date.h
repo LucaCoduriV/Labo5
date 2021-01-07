@@ -53,9 +53,6 @@ public:
    static bool estBissextile(unsigned anne);
    unsigned joursDansMois() const;
    static unsigned joursDansMois(unsigned mois, unsigned anne);
-   std::string jourLitteral() const;
-   std::string moisLitteral() const;
-   std::string anneeLitteral() const;
 
 private:
    unsigned jour;

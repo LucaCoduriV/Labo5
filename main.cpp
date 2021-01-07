@@ -20,7 +20,7 @@ using namespace std;
 int main() {
    Date date(1,1,2001);
    Date date2(11,9,2057);
-
+   cout << date("aaaa-mm.jj") << endl;
    cout << "NEW: " << date - date2 << endl;
 
    return EXIT_SUCCESS;
