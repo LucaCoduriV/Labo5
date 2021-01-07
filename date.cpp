@@ -15,6 +15,33 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 #include <cmath>
 using namespace std;
 
+bool operator==(const Date& lDate, const Date& rDate) {
+   return lDate.annee == rDate.annee && lDate.mois == rDate.mois && lDate.jour ==
+                                                                    rDate.jour;
+}
+
+bool operator!=(const Date& lDate, const Date& rDate) {
+   return !(lDate == rDate);
+}
+
+bool operator<(const Date& lDate, const Date& rDate) {
+   return lDate.annee < rDate.annee || (lDate.annee == rDate.annee &&
+         (lDate.mois < rDate.mois || (lDate.mois == rDate.mois &&
+          lDate.jour < rDate.jour)));
+}
+
+bool operator>(const Date& lDate, const Date& rDate) {
+   return rDate < lDate;
+}
+
+bool operator<=(const Date& lDate, const Date& rDate) {
+   return !(lDate > rDate);
+}
+
+bool operator>=(const Date& lDate, const Date& rDate) {
+   return !(lDate < rDate);
+}
+
 Date::Date(unsigned int jour, unsigned int mois, unsigned int annee):jour(jour),
     mois(mois),annee(annee) {}
 
@@ -62,32 +89,6 @@ unsigned Date::joursDansMois(unsigned int mois, unsigned int annee) {
       default:
          return 31;
    }
-}
-
-bool Date::operator==(const Date& date) const{
-   return annee == date.annee && mois == date.mois && jour ==
-   date.jour;
-}
-
-bool Date::operator!=(const Date& date) const{
-  return !(*this == date);
-}
-
-bool Date::operator<(const Date& date) const{
-  return annee < date.annee || (annee == date.annee &&
-  (mois < date.mois || (mois == date.mois && jour < date.jour)));
-}
-
-bool Date::operator>(const Date& date) const{
-   return date < *this;
-}
-
-bool Date::operator<=(const Date& date) const{
-  return !(*this > date);
-}
-
-bool Date::operator>=(const Date& date) const{
-   return !(*this < date);
 }
 
 Date Date::operator+(unsigned jours) const {
