@@ -20,6 +20,59 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 
 using namespace std;
 
+bool estBissextile(unsigned annee) {
+   return (annee % 400 == 0) || (annee % 4 == 0 && annee % 100 != 0);
+}
+
+unsigned joursDansMois(unsigned mois, unsigned annee) {
+   switch (mois) {
+      case 4:
+      case 6:
+      case 9:
+      case 11:
+         return 30;
+      case 2 :
+         return estBissextile(annee) ? 29 : 28;
+      default:
+         return 31;
+   }
+}
+
+Date incrementer(const Date &date, unsigned jours) {
+   unsigned jourTemp = date.getJour();
+   unsigned moisTemp = date.getMois();
+   unsigned anneeTemp = date.getAnnee();
+
+   jourTemp += jours;
+   while (jourTemp > joursDansMois(moisTemp, anneeTemp)) {
+      jourTemp -= joursDansMois(moisTemp, anneeTemp);
+      moisTemp++;
+      if (moisTemp > 12) {
+         moisTemp = 1;
+         anneeTemp++;
+      }
+   }
+   return Date((unsigned) jourTemp, (unsigned) moisTemp, (unsigned) anneeTemp);
+}
+
+Date decrementer(const Date &date, unsigned jours) {
+   long long jourTemp = date.getJour();
+   long long moisTemp = date.getMois();
+   long long anneeTemp = date.getAnnee();
+
+   jourTemp -= jours;
+   while (jourTemp < 1) {
+      moisTemp--;
+      if (moisTemp < 1) {
+         moisTemp = 12;
+         anneeTemp--;
+      }
+      jourTemp += joursDansMois((unsigned) moisTemp, (unsigned) anneeTemp);
+   }
+
+   return Date((unsigned) jourTemp, (unsigned) moisTemp, (unsigned) anneeTemp);
+}
+
 bool operator==(const Date &lDate, const Date &rDate) {
     return lDate.annee == rDate.annee && lDate.mois == rDate.mois && lDate.jour ==
                                                                      rDate.jour;
@@ -48,7 +101,7 @@ bool operator>=(const Date &lDate, const Date &rDate) {
     return !(lDate < rDate);
 }
 
-ostream &operator<<(ostream &lhs,const Date& date) {
+ostream &operator<<(ostream &lhs, const Date& date) {
     lhs << date("jj.mm.aaaa");
     return lhs;
 }
@@ -84,7 +137,7 @@ Date Date::operator+(unsigned jours) const {
     return incrementer(*this, jours);
 }
 
-Date &Date::operator+=(unsigned int jours) {
+Date &Date::operator+=(unsigned jours) {
     const Date DATE = incrementer(*this, jours);
     jour = DATE.jour;
     mois = DATE.mois;
@@ -107,7 +160,7 @@ Date Date::operator-(int jours) const {
     return decrementer(*this, (unsigned) jours);
 }
 
-Date &Date::operator-=(unsigned int jours) {
+Date &Date::operator-=(unsigned jours) {
     const Date DATE = decrementer(*this, jours);
     jour = DATE.jour;
     mois = DATE.mois;
@@ -174,56 +227,5 @@ string Date::operator()(const string &format) const {
     return dateFormat.str();
 }
 
-bool Date::estBissextile(unsigned annee) {
-    return (annee % 400 == 0) || (annee % 4 == 0 && annee % 100 != 0);
-}
 
-unsigned Date::joursDansMois(unsigned mois, unsigned annee) {
-    switch (mois) {
-        case 4:
-        case 6:
-        case 9:
-        case 11:
-            return 30;
-        case 2 :
-            return estBissextile(annee) ? 29 : 28;
-        default:
-            return 31;
-    }
-}
-
-Date Date::incrementer(const Date &date, unsigned jours) {
-    unsigned jourTemp = date.jour;
-    unsigned moisTemp = date.mois;
-    unsigned anneeTemp = date.annee;
-
-    jourTemp += jours;
-    while (jourTemp > joursDansMois(moisTemp, anneeTemp)) {
-        jourTemp -= joursDansMois(moisTemp, anneeTemp);
-        moisTemp++;
-        if (moisTemp > 12) {
-            moisTemp = 1;
-            anneeTemp++;
-        }
-    }
-    return Date((unsigned) jourTemp, (unsigned) moisTemp, (unsigned) anneeTemp);
-}
-
-Date Date::decrementer(const Date &date, unsigned jours) {
-    long long jourTemp = date.jour;
-    long long moisTemp = date.mois;
-    long long anneeTemp = date.annee;
-
-    jourTemp -= jours;
-    while (jourTemp < 1) {
-        moisTemp--;
-        if (moisTemp < 1) {
-            moisTemp = 12;
-            anneeTemp--;
-        }
-        jourTemp += joursDansMois((unsigned) moisTemp, (unsigned) anneeTemp);
-    }
-
-    return Date((unsigned) jourTemp, (unsigned) moisTemp, (unsigned) anneeTemp);
-}
 
