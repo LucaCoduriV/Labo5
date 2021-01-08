@@ -14,8 +14,9 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 -----------------------------------------------------------------------------------
 */
 
-#include "date.h"
 #include <iomanip>
+#include <sstream>
+#include "date.h"
 
 using namespace std;
 
