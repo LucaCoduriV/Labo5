@@ -66,6 +66,10 @@ int main() {
     // Test des opérateurs d'affichage
     cout << "Affichage avec le format aaaa-mm-jj : " << date1("aaaa-mm-jj")
          << endl;
+   cout << "Affichage avec le format aaaa.mm.jj : " << date1("aaaa.mm.jj")
+        << endl;
+   cout << "Affichage avec le format jj-mm-aaaa : " << date1("jj-mm-aaaa")
+        << endl;
 
     return EXIT_SUCCESS;
 }
