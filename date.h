@@ -2,9 +2,21 @@
 -----------------------------------------------------------------------------------
 Nom du fichier  : date.h
 Auteur(s)       : Chloé Fontaine & Tania Nunez & Luca Coduri
-Date creation   : 05.01.2021
-Description     : <à compléter>
-Remarque(s)     : <à compléter>
+Date création   : 05.01.2021
+
+Description     : Ce module contient la déclaration de la classe Date. Cette
+                  classe possède trois données membres qui représentent l'année,
+                  le mois et le jour à l'aide d'unsigned int. Elle est munie d'un
+                  constructeur et d'opérateurs de comparaison, arithmétiques et
+                  d'affichage. Les méthodes et surcharges sont implémentées dans le
+                  fichier date.cpp.
+
+Remarque(s)     : Il est possible de changer le format d'affichage d'un objet Date.
+                  Par défaut "jj.mm.aaaa", mais il est possible de choisir entre
+                  trois autres formats : "jj-mm-aaaa", "aaaa.mm.jj", "aaaa-mm-jj".
+                  Attention : la classe Date n'est valide que pour le calendrier
+                  Grégorien.
+
 Compilateur     : Mingw-w64 g++ 8.1.0
 -----------------------------------------------------------------------------------
 */
@@ -12,40 +24,45 @@ Compilateur     : Mingw-w64 g++ 8.1.0
 #ifndef LABO5_DATE_H
 #define LABO5_DATE_H
 
+#include <string>
 
 class Date {
-public:
-   explicit Date(unsigned jour = 0, unsigned mois = 0, unsigned annee = 0);
 
-   bool operator==(const Date& date);
-   bool operator!=(const Date& date);
-   bool operator<(const Date& date);
-   bool operator>(Date date);
-   bool operator<=(const Date& date);
-   bool operator>=(const Date& date);
+   friend bool operator==(const Date& lDate, const Date& rDate);
+   friend bool operator!=(const Date& lDate, const Date& rDate);
+   friend bool operator<(const Date& lDate, const Date& rDate);
+   friend bool operator<=(const Date& lDate, const Date& rDate);
+   friend bool operator>(const Date& lDate, const Date& rDate);
+   friend bool operator>=(const Date& lDate, const Date& rDate);
+   friend std::ostream& operator<<(std::ostream& lhs,const Date& date);
+
+public:
+
+   explicit Date(unsigned jour = 0, unsigned mois = 0, unsigned annee = 0);
+   unsigned getJour() const;
+   unsigned getMois() const;
+   unsigned getAnnee() const;
+   void setJour(unsigned nouveauJour);
+   void setMois(unsigned nouveauMois);
+   void setAnnee(unsigned nouvelleAnnee);
+
    Date operator+(unsigned jours) const;
    Date& operator+=(unsigned jours);
    Date& operator++();
    Date operator++(int);
    Date operator-(int jours) const;
    Date& operator-=(unsigned jours);
-   unsigned operator-(const Date& date) const;
+   long long operator-(const Date& dateInf) const;
    Date& operator--();
    Date operator--(int);
+   std::string operator()(const std::string& format) const;
 
-   //<<
-   //<<()
-   //bool estBissextile() const;
-   //static estBissextile(unsigned int annee)
-   //unsigned jourDansMois() const;
-   static unsigned jourDansMois(unsigned int mois, unsigned int annee);
-public:
+private:
+
    unsigned jour;
    unsigned mois;
    unsigned annee;
-   Date incrementer(unsigned jours) const;
-   Date decrementer(unsigned jours) const;
-};
 
+};
 
 #endif
